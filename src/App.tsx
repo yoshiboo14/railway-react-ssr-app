@@ -9,7 +9,7 @@ function App() {
   const [temp, setTemp] = useState("");
   const [tempMin, setTempMin] = useState("");
   const [tempMax, setTempMax] = useState("");
-  // const [humidity, setHumidity] = useState("");
+  const [humidity, setHumidity] = useState("");
 
   useEffect(() => {
     axios
@@ -23,6 +23,7 @@ function App() {
         setTemp(res.data.main.temp);
         setTempMin(res.data.main.temp_min);
         setTempMax(res.data.main.temp_max);
+        setHumidity(res.data.main.humidity);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -31,8 +32,7 @@ function App() {
     <div className="App">
       <header className="App-header">天気予報サイト</header>
       <div className="weather-card">
-        <h2 className="weather-card_region">地名</h2>
-        <h3>{cityName}</h3>
+        <h2 className="weather-card_region">{cityName}</h2>
         <h2 className="weather-card_weather">天気</h2>
         <h3>{weather}</h3>
         <h2 className="weather-card_weather">平均気温</h2>
@@ -41,8 +41,8 @@ function App() {
         <h3>{tempMin}</h3>
         <h2 className="weather-card_weather">最高気温</h2>
         <h3>{tempMax}</h3>
-        {/* <h2 className="weather-card_weather">湿度</h2>
-        <h3>papa</h3> */}
+        <h2 className="weather-card_weather">湿度</h2>
+        <h3>{humidity}</h3>
       </div>
       <div className="buttons">
         <button className="button">次へ</button>
