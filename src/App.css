@@ -12,6 +12,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  font-weight: 800;
 }
 
 .weather-card {
@@ -46,4 +47,8 @@
 
 .buttons > .button {
   margin: 0 30px;
+  padding: 10px 15px;
+  border-radius: 10px;
+  color: white;
+  background-color: #282c34;
 }
