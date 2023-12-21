@@ -8,6 +8,6 @@ app.listen(PORT, () => {
 });
 
 // ホームページに対してGET要求があった際の処理
-app.get("/", (res) => {
+app.get("/", (req, res) => {
   res.send("Hello World");
 });
