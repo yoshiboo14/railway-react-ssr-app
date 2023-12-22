@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .App {
   text-align: center;
   position: relative;
@@ -15,6 +20,12 @@
   font-weight: 800;
 }
 
+.weather-region {
+  color: black;
+  margin: 60px 0 0;
+  letter-spacing: 5px;
+}
+
 .weather-card {
   position: absolute;
   top: 0;
@@ -26,13 +37,40 @@
   height: 55vh;
   width: 400px;
   border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.weather-card_region {
+.weather-card_info {
+  height: 100%;
+  width: 65%;
   color: white;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  /* justify-content: center; */
+  align-items: center;
 }
-.weather-card_weather {
-  color: white;
+
+.weather-card_info h2 {
+  margin: 50px 0 10px;
+  letter-spacing: 5px;
+}
+
+.weather-card_info h4 {
+  margin: 10px 0 10px;
+  letter-spacing: 5px;
+}
+
+.weather-card_temp h2 {
+  margin: 0px 0 10px;
+}
+
+.weather-card_tempMaxMin {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .buttons {
