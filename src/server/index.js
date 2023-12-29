@@ -1,7 +1,10 @@
-const express = require("express"); // expressモジュールを読み込み
-const path = require("path");
-const app = express(); // expressオブジェクトを作成
-const PORT = 9000; // ポート番号を指定
+import path from "path";
+import express from "express";
+
+// expressオブジェクトを作成
+const app = express();
+// ポート番号を指定
+const PORT = 9000;
 
 // dist ディレクトリを静的ファイルのルートとして指定
 app.use(express.static(path.join(__dirname, "dist")));
