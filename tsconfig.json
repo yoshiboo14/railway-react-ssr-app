@@ -19,7 +19,7 @@
   "include": ["src", "src/**/*.ts", "src/**/*.tsx", "dist"],
   "ts-node": {
     "compilerOptions": {
-      "module": "CommonJS"
+      "module": "es5"
     }
   }
 }
