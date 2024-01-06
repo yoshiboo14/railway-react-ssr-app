@@ -1,33 +1,29 @@
-import React from "react";
-import path from "path";
+import React from "react"; //Expressフレームワークを使用できるようにする
 import express from "express";
-import { renderToString } from "react-dom/server";
-import App from "../App.tsx";
+import ReactDOMServer from "react-dom/server";
+// import { renderToString } from "react-dom/server"; //追加
+import { App } from "../App.tsx";
+const path = require("path");
 
-// expressオブジェクトを作成
-const app = express();
-// ポート番号を指定
-const PORT = 9000;
-
-// dist ディレクトリを静的ファイルのルートとして指定
-app.use(express.static(path.join(__dirname, "dist")));
+const app = express(); // expressオブジェクトを作成
+const PORT = 9000; // ポート番号を指定
 
 app.get("/", (req, res) => {
   // コンポーネントをHTMLに変換
-  const WeatherApp = renderToString(<App />);
+  const WeatherApp = ReactDOMServer.renderToString(<App />);
 
   // HTMLに変換されたAppコンポーネントを埋め込んだHTMLを作成
   const html = `
     <!DOCTYPE html>
     <html>
       <head>
-        <title>お天気SSR</title>
+      <meta charset="utf-8"/>
+        <title>SSR天気</title>
         <link rel="stylesheet" type="text/css" href="./styles.css" />
-        <script src="./main.mjs"></script>
-        <script src="./otamesi.js"></script>
+        <script type="module" src="./client.bundle.js"></script>
       </head>
       <body>
-        <div id="ssr-root">${WeatherApp}</div>
+        <div id="ssr">${WeatherApp}</div>
       </body>
     </html>
   `;
@@ -36,21 +32,25 @@ app.get("/", (req, res) => {
   // console.log(html);
 });
 
+// dist ディレクトリを静的ファイルのルートとしてdistを指定
+app.use(express.static(path.join(__dirname, "dist")));
+// console.log(__dirname);
+
 // サーバーを起動
 app.listen(PORT, () => {
   console.log(`ポート${PORT}で待受中...`);
 });
 
-app.get("/main.mjs", (req, res) => {
-  res.sendFile(path.resolve(__dirname + "/" + "main.mjs"));
+app.get("/client.bundle.js", (req, res) => {
+  res.sendFile(path.resolve(__dirname + "/client.bundle.js"));
 });
 
-app.get("/otamesi.js", (req, res) => {
-  res.sendFile(path.resolve(__dirname + "/" + "otamesi.js"));
+app.get("/server.bundle.js", (req, res) => {
+  res.sendFile(path.resolve(__dirname + "server.bundle.js"));
 });
 
 app.get("/styles.css", (req, res) => {
-  res.sendFile(path.resolve(__dirname + "/" + "styles.css"));
+  res.sendFile(path.resolve(__dirname + "/styles.css"));
 });
 
 // ホームページに対してGET要求があった際の処理
