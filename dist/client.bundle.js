@@ -34765,6 +34765,8 @@ var App = function () {
     var _f = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(), humidity = _f[0], setHumidity = _f[1]; //湿度
     // 選択された都市
     var _g = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("Tokyo, JP"), selectedCity = _g[0], setSelectedCity = _g[1];
+    // 画面に出してる天気情報
+    var _h = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(-1), current = _h[0], setCurrent = _h[1];
     // 天気情報を取得
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
         axios__WEBPACK_IMPORTED_MODULE_3__["default"]
@@ -34786,22 +34788,36 @@ var App = function () {
     };
     // 3時間後
     var afterThreeHours = function () {
-        var currentHours = -1;
-        var afterThreeHours = currentHours + 1;
+        setCurrent(current + 1);
+        console.log(current);
         axios__WEBPACK_IMPORTED_MODULE_3__["default"]
             .get("https://api.openweathermap.org/data/2.5/forecast?q=".concat(selectedCity, "&appid=439b5d4b97c24212df08275c993f9d27&lang=ja&units=metric"))
             .then(function (res) {
-            console.log(res.data.list[afterThreeHours]);
-            setWeather(res.data.list[0].weather[0].icon);
-            setTemp(res.data.list[0].main.temp);
-            setTempMin(res.data.list[0].main.temp_min);
-            setTempMax(res.data.list[0].main.temp_max);
-            setHumidity(res.data.list[0].main.humidity);
+            console.log(res.data.list[current]);
+            setWeather(res.data.list[current].weather[0].icon);
+            setTemp(res.data.list[current].main.temp);
+            setTempMin(res.data.list[current].main.temp_min);
+            setTempMax(res.data.list[current].main.temp_max);
+            setHumidity(res.data.list[current].main.humidity);
         })
             .catch(function (err) { return console.log(err); });
     };
     // 3時間前
-    var beforeThreeHours = function () { };
+    var beforeThreeHours = function () {
+        setCurrent(current - 1);
+        console.log(current);
+        axios__WEBPACK_IMPORTED_MODULE_3__["default"]
+            .get("https://api.openweathermap.org/data/2.5/forecast?q=".concat(selectedCity, "&appid=439b5d4b97c24212df08275c993f9d27&lang=ja&units=metric"))
+            .then(function (res) {
+            console.log(res.data.list[current]);
+            setWeather(res.data.list[current].weather[0].icon);
+            setTemp(res.data.list[current].main.temp);
+            setTempMin(res.data.list[current].main.temp_min);
+            setTempMax(res.data.list[current].main.temp_max);
+            setHumidity(res.data.list[current].main.humidity);
+        })
+            .catch(function (err) { return console.log(err); });
+    };
     return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", __assign({ className: "App" }, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("header", __assign({ className: "App-header" }, { children: "\u5929\u6C17\u4E88\u5831\u30A2\u30D7\u30EA" })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", __assign({ className: "weather-region" }, { children: cityName })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("label", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "radio", value: "Hokkaido, JP", checked: selectedCity === "Hokkaido, JP", onChange: function () { return handleCityChange("Hokkaido, JP"); } }), "\u5317\u6D77\u9053"] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("label", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "radio", value: "Tokyo, JP", checked: selectedCity === "Tokyo, JP", onChange: function () { return handleCityChange("Tokyo, JP"); } }), "\u6771\u4EAC"] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("label", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "radio", value: "Aichi, JP", checked: selectedCity === "Aichi, JP", onChange: function () { return handleCityChange("Aichi, JP"); } }), "\u611B\u77E5"] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("label", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "radio", value: "Osaka, JP", checked: selectedCity === "Osaka, JP", onChange: function () { return handleCityChange("Osaka, JP"); } }), "\u5927\u962A"] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("label", { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", { type: "radio", value: "Fukuoka Prefecture, JP", checked: selectedCity === "Fukuoka Prefecture, JP", onChange: function () { return handleCityChange("Fukuoka Prefecture, JP"); } }), "\u798F\u5CA1"] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", __assign({ className: "weather-card" }, { children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", __assign({ className: "weather-card_info" }, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", __assign({ className: "weather-card_weather" }, { children: "\u5929\u6C17" })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("img", { src: "http://openweathermap.org/img/w/".concat(weather, ".png"), alt: "#" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", __assign({ className: "weather-card_temp" }, { children: "\u5E73\u5747\u6C17\u6E29" })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { children: [temp, "\u2103"] }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", __assign({ className: "weather-card_tempMaxMin" }, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", __assign({ className: "weather-card_tempMin" }, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h4", { children: "\u6700\u4F4E\u6C17\u6E29" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { children: [tempMin, "\u2103"] })] })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", __assign({ className: "weather-card_tempMax" }, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h4", { children: "\u6700\u9AD8\u6C17\u6E29" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { children: [tempMax, "\u2103"] })] }))] })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h2", __assign({ className: "weather-card_humidity" }, { children: "\u6E7F\u5EA6" })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", { children: [humidity, "%"] })] })) })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", __assign({ className: "buttons" }, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", __assign({ className: "button", onClick: beforeThreeHours }, { children: "3\u6642\u9593\u524D" })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", __assign({ className: "button", onClick: afterThreeHours }, { children: "3\u6642\u9593\u5F8C" }))] }))] })) }));
 };
 
