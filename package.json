@@ -3,7 +3,6 @@
   "name": "react-ssr-app",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -12,15 +11,18 @@
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
     "axios": "^1.6.2",
+    "browserify": "^17.0.0",
+    "esm": "^3.2.25",
     "path-browserify": "^1.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.0",
-    "react-scripts": "5.0.1",
-    "typescript": "^5.3.3",
+    "react-scripts": "^5.0.1",
+    "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "client:build": "esbuild src/client/client.tsx --bundle --outfile=dist/client.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -29,7 +31,7 @@
     "mv": "mv build docs",
     "git": "git add . && git commit && git push origin master",
     "deploy": "gh-pages -d build",
-    "webpack": "npx webpack && node dist/main.tsx"
+    "webpack": "npx webpack && node dist/server.bundle.js"
   },
   "eslintConfig": {
     "extends": [
