@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
 
-const App: React.FC = () => {
+export const App: React.FC = (): JSX.Element => {
   // apiの型
   interface WeatherData {
     name: string;
     weather: { icon: string }[];
+    dt: number;
     main: {
       temp: number;
       temp_min: number;
@@ -25,6 +26,9 @@ const App: React.FC = () => {
 
   // 選択された都市
   const [selectedCity, setSelectedCity] = useState<string>("Tokyo, JP");
+
+  // 画面に出してる天気情報
+  const [current, setCurrent] = useState(-1);
 
   // 天気情報を取得
   useEffect(() => {
@@ -47,6 +51,44 @@ const App: React.FC = () => {
   // 都市が選択されたときのonChange
   const handleCityChange = (selectedCity: string) => {
     setSelectedCity(selectedCity);
+  };
+
+  // 3時間後
+  const afterThreeHours = () => {
+    setCurrent(current + 1);
+    console.log(current);
+    axios
+      .get(
+        `https://api.openweathermap.org/data/2.5/forecast?q=${selectedCity}&appid=439b5d4b97c24212df08275c993f9d27&lang=ja&units=metric`
+      )
+      .then((res) => {
+        console.log(res.data.list[current]);
+        setWeather(res.data.list[current].weather[0].icon);
+        setTemp(res.data.list[current].main.temp);
+        setTempMin(res.data.list[current].main.temp_min);
+        setTempMax(res.data.list[current].main.temp_max);
+        setHumidity(res.data.list[current].main.humidity);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  // 3時間前
+  const beforeThreeHours = () => {
+    setCurrent(current - 1);
+    console.log(current);
+    axios
+      .get(
+        `https://api.openweathermap.org/data/2.5/forecast?q=${selectedCity}&appid=439b5d4b97c24212df08275c993f9d27&lang=ja&units=metric`
+      )
+      .then((res) => {
+        console.log(res.data.list[current]);
+        setWeather(res.data.list[current].weather[0].icon);
+        setTemp(res.data.list[current].main.temp);
+        setTempMin(res.data.list[current].main.temp_min);
+        setTempMax(res.data.list[current].main.temp_max);
+        setHumidity(res.data.list[current].main.humidity);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -123,12 +165,14 @@ const App: React.FC = () => {
           </div>
         </div>
         <div className="buttons">
-          <button className="button">3時間後</button>
-          <button className="button">3時間前</button>
+          <button className="button" onClick={beforeThreeHours}>
+            3時間前
+          </button>
+          <button className="button" onClick={afterThreeHours}>
+            3時間後
+          </button>
         </div>
       </div>
     </>
   );
 };
-
-export default App;
